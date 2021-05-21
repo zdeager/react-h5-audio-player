@@ -37,6 +37,7 @@ interface MSEPropsObject {
 }
 
 interface PlayerProps {
+  dur?: number
   /**
    * HTML5 Audio tag autoPlay property
    */
@@ -337,6 +338,7 @@ class H5AudioPlayer extends Component<PlayerProps> {
 
   renderUIModule = (comp: CustomUIModule, key: Key): ReactElement => {
     const {
+      dur,
       defaultCurrentTime,
       progressUpdateInterval,
       showDownloadProgress,
@@ -384,6 +386,7 @@ class H5AudioPlayer extends Component<PlayerProps> {
       case RHAP_UI.PROGRESS_BAR:
         return (
           <ProgressBar
+            dur={dur}
             key={key}
             ref={this.progressBar}
             audio={this.audio.current}

@@ -3,6 +3,7 @@ import { getPosX, throttle } from './utils'
 import { OnSeek } from './index'
 
 interface ProgressBarForwardRefProps {
+  dur: number
   audio: HTMLAudioElement
   progressUpdateInterval: number
   showDownloadProgress: boolean
@@ -51,8 +52,12 @@ class ProgressBar extends Component<ProgressBarProps, ProgressBarState> {
   }
 
   getDuration(): number {
-    const { audio, srcDuration } = this.props
-    return typeof srcDuration === 'undefined' ? audio.duration : srcDuration
+    const { dur, audio, srcDuration } = this.props
+    if (typeof srcDuration !== 'undefined')
+      return srcDuration;
+    if (dur && (isNaN(audio.duration) || !isFinite(audio.duration)))
+      return dur;
+    return audio.duration
   }
 
   // Get time info while dragging indicator by mouse or touch
